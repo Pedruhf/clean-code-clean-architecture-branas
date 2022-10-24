@@ -2,7 +2,7 @@ import { Coupon, Cpf, Item, OrderItem, DefaultFreightCalculator, FreightCalculat
 import { OrderCode } from "./order-code";
 
 export class Order {
-  protected cpf: Cpf;
+  private cpf: Cpf;
   public orderItems: OrderItem[];
   public coupon?: Coupon;
   private freight: number;
@@ -36,6 +36,22 @@ export class Order {
 
   getCode(): string {
     return this.code.value;
+  }
+
+  getCpf(): string {
+    return this.cpf.getValue();
+  }
+
+  getOrderItems(): OrderItem[] {
+    return this.orderItems;
+  }
+
+  getDate(): Date {
+    return this.date;
+  }
+
+  getSequence(): number {
+    return this.sequence;
   }
 
   getTotal(): number {

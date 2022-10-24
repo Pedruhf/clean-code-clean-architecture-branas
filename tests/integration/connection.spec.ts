@@ -1,8 +1,10 @@
+import { PgPromiseConnectionAdapter } from "@/infra/database";
+
 describe("Connection", () => {
   test("Should create a connection with database", async () => {
-    const connection = new Connection();
-    const itemsData = connection.query("SELECT * FROM ccca.item", []);
+    const connection = new PgPromiseConnectionAdapter();
+    const itemsData = await connection.query("SELECT * FROM items", []);
 
-    expect(itemsData).toHaveLength(6);
+    expect(itemsData).toBeTruthy();
   });
 });

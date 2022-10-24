@@ -36,4 +36,8 @@ export class Cpf {
     const actualDigit = cpf.slice(9);
     return actualDigit === calculateDigit;
   }
+
+  getValue(): string {
+    return this.value;
+  }
 }

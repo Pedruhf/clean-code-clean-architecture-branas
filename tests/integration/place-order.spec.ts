@@ -1,11 +1,13 @@
 import { PlaceOrder, PlaceOrderInput } from "@/application/use-cases";
-import { CouponRepositoryMemory, ItemRepositoryMemory, OrderRepositoryMemory } from "@/infra/repositories/memory";
+import { Connection, PgPromiseConnectionAdapter } from "@/infra/database";
+import { CouponRepositoryDatabase, ItemRepositoryDatabase, OrderRepositoryDatabase } from "@/infra/repositories/database";
 
 describe("PlaceOrder", () => {
   let input: PlaceOrderInput;
-  let itemRepository: ItemRepositoryMemory;
-  let couponRepository: CouponRepositoryMemory;
-  let orderRepository: OrderRepositoryMemory;
+  let connection: Connection;
+  let itemRepository: ItemRepositoryDatabase;
+  let couponRepository: CouponRepositoryDatabase;
+  let orderRepository: OrderRepositoryDatabase;
   let sut: PlaceOrder;
 
   beforeAll(() => {
@@ -22,11 +24,16 @@ describe("PlaceOrder", () => {
   });
 
   beforeEach(() => {
-    itemRepository = new ItemRepositoryMemory();
-    couponRepository = new CouponRepositoryMemory();
-    orderRepository = new OrderRepositoryMemory();
+    connection = new PgPromiseConnectionAdapter();
+    itemRepository = new ItemRepositoryDatabase(connection);
+    couponRepository = new CouponRepositoryDatabase(connection);
+    orderRepository = new OrderRepositoryDatabase(connection);
     sut = new PlaceOrder(itemRepository, orderRepository, couponRepository);
   });
+
+  afterEach(async () => {
+    await orderRepository.clear();
+  })
 
   test("Should place a order", async () => {
     const output = await sut.execute(input);
