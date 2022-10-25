@@ -13,7 +13,7 @@ describe("SimulateFreight", () => {
   let freightCalculator: FreightCalculator;
 
   beforeEach(() => {
-    connection = new PgPromiseConnectionAdapter();
+    connection = PgPromiseConnectionAdapter.getInstance();
     freightCalculator = new DefaultFreightCalculator();
     itemRepository = new ItemRepositoryDatabase(connection);
   });

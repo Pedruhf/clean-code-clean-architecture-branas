@@ -19,12 +19,12 @@ describe("PlaceOrder", () => {
         { idItem: 3, quantity: 3},
       ],
       new Date(),
-      "VALE20",
+      "INVALID_COUPON",
     );
   });
 
   beforeEach(() => {
-    connection = new PgPromiseConnectionAdapter();
+    connection = PgPromiseConnectionAdapter.getInstance();
     itemRepository = new ItemRepositoryDatabase(connection);
     couponRepository = new CouponRepositoryDatabase(connection);
     orderRepository = new OrderRepositoryDatabase(connection);
