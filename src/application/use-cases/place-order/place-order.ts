@@ -1,6 +1,6 @@
 import { DefaultFreightCalculator, Order } from "@/domain/entities";
 import { CouponRepository, ItemRepository, OrderRepository } from "@/domain/contracts/repositories";
-import { PlaceOrderInput, PlaceOrderOutput } from "@/application/use-cases";
+import { PlaceOrderInput, PlaceOrderOutput } from "@/application/use-cases/place-order";
 
 export class PlaceOrder {
   constructor (

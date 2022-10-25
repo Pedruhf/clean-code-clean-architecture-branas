@@ -1,4 +1,4 @@
-import { PlaceOrder, PlaceOrderInput } from "@/application/use-cases";
+import { PlaceOrder, PlaceOrderInput } from "@/application/use-cases/place-order";
 import { Connection, PgPromiseConnectionAdapter } from "@/infra/database";
 import { CouponRepositoryDatabase, ItemRepositoryDatabase, OrderRepositoryDatabase } from "@/infra/repositories/database";
 
