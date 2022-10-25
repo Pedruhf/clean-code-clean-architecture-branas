@@ -31,14 +31,14 @@ insert into zipcodes (code, street, neighborhood, lat, long) values ('22060030',
 
 create table orders (
 	id_order serial primary key,
-	coupon_code text,
-	coupon_percentage integer,
 	code text,
 	cpf text,
-	issue_date timestamp,
 	freight numeric,
-	sequence integer,
-	total numeric
+	issue_date timestamp,
+	total numeric,
+	coupon_code text,
+	coupon_percentage integer,
+	sequence integer
 );
 
 create table order_items (

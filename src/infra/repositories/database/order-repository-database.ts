@@ -7,14 +7,16 @@ export class OrderRepositoryDatabase implements OrderRepository {
 
   async save(order: Order): Promise<void> {
     const [orderData] = await this.connection.query(
-      "INSERT INTO orders (code, cpf, issue_date, freight, sequence, coupon) value ($1, $2, $3, $4, $5, $6)",
+      "INSERT INTO orders (code, cpf, freight, issue_date, total, coupon_code, coupon_percentage, sequence) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [
         order.getCode(),
         order.getCpf(),
-        order.getDate(),
         order.getFreight(),
-        order.getSequence(),
+        order.getDate(),
+        order.getTotal(),
         order.coupon?.code,
+        order.coupon?.percentage,
+        order.getSequence(),
       ]
     );
     for (const orderItem of order.getOrderItems()) {
@@ -31,10 +33,12 @@ export class OrderRepositoryDatabase implements OrderRepository {
   }
 
   async count(): Promise<number> {
-    const [orderData] = await this.connection.query("SELECT COUNT(*)::int AS count FROM orders", []);
+    const [orderData] = await this.connection.query(
+      "SELECT COUNT(*)::int AS count FROM orders",
+      []
+    );
     return orderData.count;
   }
-
 
   async clear(): Promise<void> {
     await this.connection.query("DELETE FROM order_items", []);

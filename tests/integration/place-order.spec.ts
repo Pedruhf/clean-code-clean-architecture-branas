@@ -15,7 +15,7 @@ describe("PlaceOrder", () => {
       "005.899.640-03",
       [
         { idItem: 1, quantity: 1},
-        { idItem: 2, quantity: 2},
+        { idItem: 2, quantity: 1},
         { idItem: 3, quantity: 3},
       ],
       new Date(),
@@ -37,8 +37,8 @@ describe("PlaceOrder", () => {
 
   test("Should place a order", async () => {
     const output = await sut.execute(input);
-    // (150 * 1) + (250 * 2) + (5.60 * 3) - 20% = 533.44
-    expect(output.total).toBe(533.44);
+    // (1000 * 1) Guitarra + (5000 * 1) Amplificador + (30 * 3) Cabo + 260 frete
+    expect(output.total).toBe(6350);
   });
 
   test("Should place a order with freight", async () => {
