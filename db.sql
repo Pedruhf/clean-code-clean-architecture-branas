@@ -6,6 +6,7 @@ drop table if exists zipcodes;
 
 create table items (
 	id_item serial primary key,
+  category text,
 	description text,
 	price numeric,
 	width integer,
@@ -14,9 +15,12 @@ create table items (
 	weight integer
 );
 
-insert into items (description, price, width, height, length, weight) values ('Guitarra', 1000, 100, 30, 10, 3);
-insert into items (description, price, width, height, length, weight) values ('Amplificador', 5000, 50, 50, 50, 20);
-insert into items (description, price, width, height, length, weight) values ('Cabo', 30, 10, 10, 10, 1);
+insert into items (category, description, price, width, height, length, weight) values ('Música', 'CD', 30, 30, 30, 10, 0.3);
+insert into items (category, description, price, width, height, length, weight) values ('Vídeo', 'DVD', 50, 40, 20, 10, 0.5);
+insert into items (category, description, price, width, height, length, weight) values ('Vídeo', 'VHS', 10, 40, 20, 10, 0.5);
+insert into items (category, description, price, width, height, length, weight) values ('Instrumentos Musicais', 'Guitarra', 1000, 100, 30, 10, 3);
+insert into items (category, description, price, width, height, length, weight) values ('Instrumentos Musicais', 'Amplificador', 5000, 50, 50, 50, 20);
+insert into items (category, description, price, width, height, length, weight) values ('Instrumentos Musicais', 'Cabo', 30, 10, 10, 10, 1);
 
 create table zipcodes (
 	code text primary key,
