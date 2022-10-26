@@ -4,7 +4,7 @@ import {
 } from "@/application/use-cases/place-order";
 import { RepositoryFactory } from "@/domain/factories";
 import { Connection, PgPromiseConnectionAdapter } from "@/infra/database";
-import { DatabaseRepositoryFactory, MemoryRepositoryFactory } from "@/infra/factories";
+import { MemoryRepositoryFactory } from "@/infra/factories";
 import { OrderRepositoryDatabase } from "@/infra/repositories/database";
 
 describe("PlaceOrder", () => {

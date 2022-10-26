@@ -58,3 +58,7 @@ create table coupons (
 	percentage integer,
 	expire_date timestamp
 );
+
+insert into coupons (code, percentage, expire_date) values ('VALE10', 10, '2055-06-22 10:10:25-07');
+insert into coupons (code, percentage, expire_date) values ('VALE20', 20, '2052-06-22 10:10:25-07');
+insert into coupons (code, percentage, expire_date) values ('VALE30', 30, '2050-06-22 10:10:25-07');
