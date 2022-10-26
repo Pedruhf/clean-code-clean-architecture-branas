@@ -13,6 +13,12 @@ export class OrderRepositoryMemory implements OrderRepository {
     return Promise.resolve();
   }
 
+  get(code: string): Promise<Order> {
+    const order = this.orders.find(order => order.getCode() === code);
+    if (!order) throw new Error("Order not found");
+    return Promise.resolve(order);
+  }
+
   count(): Promise<number> {
     return Promise.resolve(this.orders.length);
   }

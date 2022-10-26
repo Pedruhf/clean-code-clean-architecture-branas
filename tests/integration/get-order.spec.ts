@@ -1,3 +1,4 @@
+import { GetOrder } from "@/application/use-cases/get-order";
 import {
   PlaceOrder,
   PlaceOrderInput,
@@ -12,7 +13,8 @@ describe("PlaceOrder", () => {
   let connection: Connection;
   let orderRepository: OrderRepositoryDatabase;
   let repositoryFactory: RepositoryFactory;
-  let sut: PlaceOrder;
+  let placeOrder: PlaceOrder
+  let sut: GetOrder;
 
   beforeAll(() => {
     input = new PlaceOrderInput(
@@ -23,7 +25,7 @@ describe("PlaceOrder", () => {
         { idItem: 3, quantity: 3 },
       ],
       new Date(),
-      "INVALID_COUPON"
+      "VALE20"
     );
   });
 
@@ -31,45 +33,18 @@ describe("PlaceOrder", () => {
     connection = PgPromiseConnectionAdapter.getInstance();
     orderRepository = new OrderRepositoryDatabase(connection);
     repositoryFactory = new DatabaseRepositoryFactory(connection);
-    sut = new PlaceOrder(repositoryFactory);
+    placeOrder = new PlaceOrder(repositoryFactory);
+    sut = new GetOrder(repositoryFactory);
   });
 
   afterEach(async () => {
     await orderRepository.clear();
   });
 
-  test("Should place a order", async () => {
-    const output = await sut.execute(input);
-    expect(output.total).toBe(150);
-  });
-
-  test("Should place a order with freight", async () => {
-    const input = new PlaceOrderInput(
-      "005.899.640-03",
-      [
-        { idItem: 4, quantity: 1 },
-        { idItem: 5, quantity: 1 },
-        { idItem: 6, quantity: 3 },
-      ],
-      new Date()
-    );
-    const output = await sut.execute(input);
-    // 260 + 6090 = 6350
-    expect(output.total).toBe(6350);
-  });
-
-  test("Should throw if item not found", async () => {
-    const input = new PlaceOrderInput(
-      "005.899.640-03",
-      [{ idItem: -1, quantity: 1 }],
-      new Date()
-    );
-    const outputPromise = sut.execute(input);
-    await expect(outputPromise).rejects.toThrow(new Error("Item not found"));
-  });
-
-  test("Should place a order with code", async () => {
-    const output = await sut.execute(input);
-    expect(output.code).toBe("202200000001");
+  test("Should get a order by code", async () => {
+    const output = await placeOrder.execute(input);
+    const order = await sut.execute(output.code);
+    expect(order.code).toBe("202200000001");
+    expect(order.total).toBe(128);
   });
 });
